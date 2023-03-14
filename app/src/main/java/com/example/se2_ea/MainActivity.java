@@ -18,6 +18,8 @@ public class MainActivity extends AppCompatActivity {
     private String serverName = "se2-isys.aau.at";            //"se2-isys.aau.at"; "time.nist.gov";
     private int serverPort = 53212;               //53212; 13;
 
+    private String test;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,12 +33,16 @@ public class MainActivity extends AppCompatActivity {
 
     public void onClickSendToServer(View view) {
 
+        System.out.println("hi");
+
         new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
-                    String userInput = etUserInput.toString();
+                    //int userInput = Integer.parseInt(etUserInput.getText().toString());
+                    String userInput = etUserInput.getText().toString();
                     String serverOutput;
+                    test = userInput;
 
                     BufferedReader inFromUser = new BufferedReader(new InputStreamReader(System.in));
 
@@ -45,22 +51,22 @@ public class MainActivity extends AppCompatActivity {
                    DataOutputStream outToServer = new DataOutputStream(socket.getOutputStream());
 
                     BufferedReader inFromServer = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-                    //inFromServer.readLine();
                     outToServer.writeBytes(userInput + '\n');
                     serverOutput = inFromServer.readLine();
-                    //String serverOutput = inFromServer.readLine().substring(6,23);
 
                     socket.close();
-
+                    System.out.println(userInput);
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            tvReturnData.setText(serverOutput);
                             System.out.println(userInput);
+
+                            tvReturnData.setText(serverOutput);
+
                         }
                     });
 
-
+                    System.out.println(test);
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
