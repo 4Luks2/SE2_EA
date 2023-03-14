@@ -69,37 +69,55 @@ public class MainActivity extends AppCompatActivity {
 
 
     public void onClickFilterPrime(View view) {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                String userInput = etUserInput.getText().toString();
+                char[] charArray = userInput.toCharArray();
+                ArrayList<Integer> primeNumbers = new ArrayList<>(); //= Integer.parseInt(String.valueOf(charArray));
+
+                for (int i = 0; i < charArray.length; i++) {
+                    if (isPrime(charToInt(charArray[i]))){
+                        primeNumbers.add(charToInt(charArray[i]));
+                    }
+                }
+
+                int retVal = arrayListToInt(primeNumbers);
+                //tvReturnData.setText(userInput);
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            tvReturnData.setText(String.valueOf(retVal));
+                        }
+                    });
+
+            }
+        }).start();
+
+    }
+
+
+
+
+
+       /* _________________________________________________
         String userInput = etUserInput.getText().toString();
-
-        System.out.println(userInput);
-
         char[] charArray = userInput.toCharArray();
         ArrayList<Integer> primeNumbers = new ArrayList<>(); //= Integer.parseInt(String.valueOf(charArray));
 
         for (int i = 0; i < charArray.length; i++) {
-            System.out.println(charToInt(charArray[i]));
             if (isPrime(charToInt(charArray[i]))){
-                System.out.println(charToInt(charArray[i]) + "is prime");
                 primeNumbers.add(charToInt(charArray[i]));
             }else{
-                System.out.println(charToInt(charArray[i]) + "is not prime");
             }
         }
 
-        System.out.println(arrayListToInt(primeNumbers));
-/*
-        for (char c : charArray) {
-            if(isPrime(charToInt(c))){
-                primeNumbers.add(charToInt(c));
-            }
-        }
-*/
         int retVal = arrayListToInt(primeNumbers);
-        tvReturnData.setText(userInput);
+        tvReturnData.setText(retVal);
+}
+*/
 
 
-
-    }
 
     private boolean isPrime(int x) {
         System.out.println(x + " are u prime?");
