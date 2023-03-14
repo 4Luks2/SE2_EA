@@ -1,5 +1,6 @@
 package com.example.se2_ea;
 
+
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
@@ -9,7 +10,9 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import java.io.*;
+import java.lang.reflect.Array;
 import java.net.*;
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
     private EditText etUserInput;
@@ -41,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
 
                     //BufferedReader inFromUser = new BufferedReader(new InputStreamReader(System.in));
 
-                    Socket socket = new Socket(serverName,serverPort);
+                    Socket socket = new Socket(serverName, serverPort);
 
                     DataOutputStream outToServer = new DataOutputStream(socket.getOutputStream());
 
@@ -63,6 +66,40 @@ public class MainActivity extends AppCompatActivity {
         }).start();
 
     }
+
+
+    public void onClickFilterPrime(View view) {
+        String userInput = etUserInput.getText().toString();
+
+        char[] numbers = userInput.toCharArray();
+        ArrayList<Integer> primeNumbers = new ArrayList<>(); //= Integer.parseInt(String.valueOf(charArray));
+
+        for (char c : numbers) {
+            if(isPrime(c)){
+                primeNumbers.add((int) c);
+            }
+        }
+
+        tvReturnData.setText(toInt(primeNumbers));
+    }
+
+    private boolean isPrime(int x) {
+        if (x <= 1) {
+            return false;
+        }
+        for (int i = 2; i <= Math.sqrt(x); i++) {
+            if (x % i == 0) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    int toInt(ArrayList<Integer> list) {
+        int retVal = 0;
+        for (Integer i : list) { // assuming list is of type List<Integer>
+            retVal = 10*retVal + i;
+        }
+        return retVal;
+    }
 }
-
-
