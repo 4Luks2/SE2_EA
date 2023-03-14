@@ -15,8 +15,8 @@ public class MainActivity extends AppCompatActivity {
     private EditText etUserInput;
     private TextView tvReturnData;
     private Button btnSend;
-    private String serverName = "time.nist.gov";            //"se2-isys.aau.at";
-    private int serverPort = 13;               //53212;
+    private String serverName = "se2-isys.aau.at";            //"se2-isys.aau.at"; "time.nist.gov";
+    private int serverPort = 53212;               //53212; 13;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,19 +30,25 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onClickSendToServer(View view) {
-            String userInput = etUserInput.toString();
+
         new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
+                    String userInput = etUserInput.toString();
+                    String serverOutput;
+
+                    BufferedReader inFromUser = new BufferedReader(new InputStreamReader(System.in));
+
                     Socket socket = new Socket(serverName,serverPort);
 
-
-
+                   DataOutputStream outToServer = new DataOutputStream(socket.getOutputStream());
 
                     BufferedReader inFromServer = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-                    inFromServer.readLine();
-                    String serverOutput = inFromServer.readLine().substring(6,23);
+                    //inFromServer.readLine();
+                    outToServer.writeBytes(userInput + '\n');
+                    serverOutput = inFromServer.readLine();
+                    //String serverOutput = inFromServer.readLine().substring(6,23);
 
                     socket.close();
 
@@ -50,6 +56,7 @@ public class MainActivity extends AppCompatActivity {
                         @Override
                         public void run() {
                             tvReturnData.setText(serverOutput);
+                            System.out.println(userInput);
                         }
                     });
 
