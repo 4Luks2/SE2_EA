@@ -4,53 +4,63 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import java.io.*;
 import java.net.*;
 
 public class MainActivity extends AppCompatActivity {
-    private TextView tvReturnSentence;
+    private EditText etUserInput;
+    private TextView tvReturnData;
+    private Button btnSend;
+    private String serverName = "time.nist.gov";            //"se2-isys.aau.at";
+    private int serverPort = 13;               //53212;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        etUserInput = findViewById(R.id.etUserInput);
+        tvReturnData = findViewById(R.id.tvReturnData);
+        btnSend = findViewById(R.id.btnSend);
+
     }
 
+    public void onClickSendToServer(View view) {
+            String userInput = etUserInput.toString();
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    Socket socket = new Socket(serverName,serverPort);
 
-    public void onClickSendToServer (View view){
 
 
-    }
-   // private class TCPClient {//implements Runnable{
 
-        public void main(String[] argv) throws Exception{
+                    BufferedReader inFromServer = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+                    inFromServer.readLine();
+                    String serverOutput = inFromServer.readLine().substring(6,23);
 
-            String sentence;
-            String returnSentence;
+                    socket.close();
 
-            Socket clientSocket = new Socket("se2-isys.aau.at",53212);
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            tvReturnData.setText(serverOutput);
+                        }
+                    });
 
-            BufferedReader inFromUser = new BufferedReader(new InputStreamReader(System.in));
-            DataOutputStream outToServer = new DataOutputStream(clientSocket.getOutputStream());
-            BufferedReader inFromServer = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
 
-            //inFromServer.readLine(); //maybe there is an empty line
-            sentence = inFromUser.readLine();
-            outToServer.writeBytes(sentence + '\n');
-
-            returnSentence = inFromServer.readLine();
-            System.out.println("From Server:" + returnSentence);
-
-            clientSocket.close();
-
-            runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    tvReturnSentence.setText(returnSentence);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
                 }
-            });
-        }
+            }
+        }).start();
+
     }
+}
+
 

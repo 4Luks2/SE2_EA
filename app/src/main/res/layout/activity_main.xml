@@ -19,7 +19,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/insertNumberField" />
+        app:layout_constraintTop_toBottomOf="@+id/etUserInput" />
 
     <TextView
         android:id="@+id/tv1"
@@ -50,7 +50,7 @@
         app:layout_constraintVertical_bias="0.033" />
 
     <EditText
-        android:id="@+id/insertNumberField"
+        android:id="@+id/etUserInput"
         android:layout_width="228dp"
         android:layout_height="66dp"
         android:layout_marginStart="25dp"
@@ -80,7 +80,7 @@
         app:layout_constraintVertical_bias="0.0" />
 
     <TextView
-        android:id="@+id/tvReturnSentence"
+        android:id="@+id/tvReturnData"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
