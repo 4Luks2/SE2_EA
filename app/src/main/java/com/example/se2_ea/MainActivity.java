@@ -83,11 +83,14 @@ public class MainActivity extends AppCompatActivity {
                 }
 
                 int retVal = arrayListToInt(primeNumbers);
-                //tvReturnData.setText(userInput);
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
+                            if(retVal == 0){
+                                tvReturnData.setText("Keine Primzahlen enthalten");
+                            }else{
                             tvReturnData.setText(String.valueOf(retVal));
+                            }
                         }
                     });
 
