@@ -77,63 +77,58 @@ public class MainActivity extends AppCompatActivity {
                 ArrayList<Integer> primeNumbers = new ArrayList<>(); //= Integer.parseInt(String.valueOf(charArray));
 
                 for (int i = 0; i < charArray.length; i++) {
-                    if (isPrime(charToInt(charArray[i]))){
+                    if (isPrime(charToInt(charArray[i]))) {
                         primeNumbers.add(charToInt(charArray[i]));
                     }
                 }
 
                 int retVal = arrayListToInt(primeNumbers);
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            if(retVal == 0){
-                                tvReturnData.setText("Keine Primzahlen enthalten");
-                            }else{
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (retVal == 0) {
+                            tvReturnData.setText("Keine Primzahlen enthalten");
+                        } else {
                             tvReturnData.setText(String.valueOf(retVal));
                             //tvReturnData.setText(arrayListToString(primeNumbers));
-                            }
                         }
-                    });
-
+                    }
+                });
             }
         }).start();
-
     }
 
     private boolean isPrime(int x) {
-        System.out.println(x + " are u prime?");
         if (x <= 1) {
-            System.out.println("no");
             return false;
         }
         for (int i = 2; i <= Math.sqrt(x); i++) {
             if (x % i == 0) {
-                System.out.println("no");
                 return false;
             }
         }
-        System.out.println("yes");
         return true;
     }
-/*
-    private String arrayListToString(ArrayList<Integer> list){
-        StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < list.size(); i++) {
-            int num = list.get(i);
-            sb.append(num);
+
+    /*
+        private String arrayListToString(ArrayList<Integer> list){
+            StringBuilder sb = new StringBuilder();
+            for (int i = 0; i < list.size(); i++) {
+                int num = list.get(i);
+                sb.append(num);
+            }
+            return sb.toString();
         }
-        return sb.toString();
-    }
-*/
+    */
     private int arrayListToInt(ArrayList<Integer> list) {
         int retVal = 0;
         for (Integer i : list) { // assuming list is of type List<Integer>
-            retVal = 10*retVal + i;
+            retVal = 10 * retVal + i;
         }
         return retVal;
     }
 
-    private int charToInt(char c){
+    private int charToInt(char c) {
         return c - '0';
     }
 }
