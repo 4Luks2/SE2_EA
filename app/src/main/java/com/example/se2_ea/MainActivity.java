@@ -90,6 +90,7 @@ public class MainActivity extends AppCompatActivity {
                                 tvReturnData.setText("Keine Primzahlen enthalten");
                             }else{
                             tvReturnData.setText(String.valueOf(retVal));
+                            //tvReturnData.setText(arrayListToString(primeNumbers));
                             }
                         }
                     });
@@ -98,29 +99,6 @@ public class MainActivity extends AppCompatActivity {
         }).start();
 
     }
-
-
-
-
-
-       /* _________________________________________________
-        String userInput = etUserInput.getText().toString();
-        char[] charArray = userInput.toCharArray();
-        ArrayList<Integer> primeNumbers = new ArrayList<>(); //= Integer.parseInt(String.valueOf(charArray));
-
-        for (int i = 0; i < charArray.length; i++) {
-            if (isPrime(charToInt(charArray[i]))){
-                primeNumbers.add(charToInt(charArray[i]));
-            }else{
-            }
-        }
-
-        int retVal = arrayListToInt(primeNumbers);
-        tvReturnData.setText(retVal);
-}
-*/
-
-
 
     private boolean isPrime(int x) {
         System.out.println(x + " are u prime?");
@@ -137,8 +115,17 @@ public class MainActivity extends AppCompatActivity {
         System.out.println("yes");
         return true;
     }
-
-    int arrayListToInt(ArrayList<Integer> list) {
+/*
+    private String arrayListToString(ArrayList<Integer> list){
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < list.size(); i++) {
+            int num = list.get(i);
+            sb.append(num);
+        }
+        return sb.toString();
+    }
+*/
+    private int arrayListToInt(ArrayList<Integer> list) {
         int retVal = 0;
         for (Integer i : list) { // assuming list is of type List<Integer>
             retVal = 10*retVal + i;
@@ -146,7 +133,7 @@ public class MainActivity extends AppCompatActivity {
         return retVal;
     }
 
-    int charToInt(char c){
+    private int charToInt(char c){
         return c - '0';
     }
 }
